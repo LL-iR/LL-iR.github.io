@@ -10,7 +10,7 @@
     }
     
     .container {
-      max-width: 400px;
+      max-width: 600px; /* 调整最大宽度为600px */
       margin: 50px auto;
       background-color: #fff;
       padding: 20px;
@@ -65,6 +65,14 @@
     
     .uuid-list {
       margin-top: 10px;
+      width: 100%; /* 调整宽度为100% */
+      resize: vertical; /* 允许垂直调整大小 */
+    }
+
+    .uuid-number {
+      display: inline-block;
+      width: 30px;
+      margin-right: 10px;
     }
   </style>
 </head>
@@ -79,14 +87,17 @@
     
     <div class="result">
       <label for="uuid-list">UUID列表：</label>
-      <textarea id="uuid-list" rows="5" readonly></textarea>
+      <div id="uuid-list"></div>
     </div>
+
+    <button onclick="copyAllUUIDs()">复制全部UUID</button>
   </div>
   
   <script>
     function generateUUIDs() {
       var quantity = parseInt(document.getElementById("quantity").value, 10);
-      var uuids = [];
+      var uuids = document.getElementById("uuid-list");
+      uuids.innerHTML = "";
       
       for (var i = 0; i < quantity; i++) {
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -95,10 +106,33 @@
           return v.toString(16);
         });
         
-        uuids.push(uuid);
+        var span = document.createElement("span");
+        span.className = "uuid-number";
+        span.innerHTML = (i + 1) + ".";
+        
+        var textNode = document.createTextNode(uuid);
+        
+        uuids.appendChild(span);
+        uuids.appendChild(textNode);
+        uuids.appendChild(document.createElement("br"));
       }
-      
-      document.getElementById("uuid-list").value = uuids.join("\n");
+    }
+    
+    function copyAllUUIDs() {
+      var uuids = document.getElementById("uuid-list").innerText;
+      copyToClipboard(uuids);
+    }
+
+    function copyToClipboard(text) {
+      var el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
     }
   </script>
 </body>
