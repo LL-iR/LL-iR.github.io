@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>进制转换</title>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      display: block;
+      background-color: #ff5722;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #f44336;
+    }
+    
+    .result {
+      margin-top: 20px;
+    }
+    
+    .result label {
+      font-weight: bold;
+    }
+    
+    .error {
+      color: #f44336;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .copy-button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      margin-left: 10px;
+    }
+    
+    .copy-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>进制转换器</h1>
+    
+    <label for="input-number">输入一个数：</label>
+    <input type="text" id="input-number">
+    
+    <label for="from-base">选择当前进制：</label>
+    <select id="from-base">
+      <option value="2">二进制</option>
+      <option value="8">八进制</option>
+      <option value="10">十进制</option>
+      <option value="16">十六进制</option>
+    </select>
+    
+    <label for="to-base">选择要转换的进制：</label>
+    <select id="to-base">
+      <option value="2">二进制</option>
+      <option value="8">八进制</option>
+      <option value="10">十进制</option>
+      <option value="16">十六进制</option>
+    </select>
+    
+    <button onclick="convert()">转换</button>
+    
+    <div class="result">
+      <label for="output-number">转换结果：</label>
+      <input type="text" id="output-number" readonly>
+      <button class="copy-button" onclick="copyOutput()">复制</button>
+    </div>
+    
+    <div id="error-message" class="error"></div>
+  </div>
+  
+  <script>
+    function convert() {
+      var inputNumber = document.getElementById("input-number").value;
+      var fromBase = parseInt(document.getElementById("from-base").value, 10);
+      var toBase = parseInt(document.getElementById("to-base").value, 10);
+      var outputNumber;
+      var errorMessage = "";
+      
+      try {
+        outputNumber = parseInt(inputNumber, fromBase).toString(toBase);
+      } catch (error) {
+        errorMessage = "发生错误，请检查输入是否正确。";
+        document.getElementById("output-number").value = "";
+      }
+      
+      document.getElementById("output-number").value = outputNumber;
+      document.getElementById("error-message").textContent = errorMessage;
+    }
+    
+    function copyOutput() {
+      var outputNumber = document.getElementById("output-number");
+      
+      outputNumber.select();
+      outputNumber.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+    }
+  </script>
+</body>
+</html>
