@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UUID生成器</title>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      display: block;
+      background-color: #ff5722;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #f44336;
+    }
+    
+    .result {
+      margin-top: 20px;
+    }
+    
+    .result label {
+      font-weight: bold;
+    }
+    
+    .uuid-list {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>UUID生成器</h1>
+    
+    <label for="quantity">生成数量：</label>
+    <input type="number" id="quantity" min="1" value="1">
+    
+    <button onclick="generateUUIDs()">生成UUID</button>
+    
+    <div class="result">
+      <label for="uuid-list">UUID列表：</label>
+      <textarea id="uuid-list" rows="5" readonly></textarea>
+    </div>
+  </div>
+  
+  <script>
+    function generateUUIDs() {
+      var quantity = parseInt(document.getElementById("quantity").value, 10);
+      var uuids = [];
+      
+      for (var i = 0; i < quantity; i++) {
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0,
+              v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+        
+        uuids.push(uuid);
+      }
+      
+      document.getElementById("uuid-list").value = uuids.join("\n");
+    }
+  </script>
+</body>
+</html>
