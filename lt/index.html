@@ -1,14 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="css.css">
   <title>聊天系统</title>
+  <style>
+  /* CSS 样式 */ body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+
+#chat-log {
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+#message-input {
+  width: 300px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+p {
+  margin: 0;
+}
+  </style>
 </head>
 <body>
   <div id="chat-log"></div>
   <input type="text" id="message-input">
   <button onclick="sendMessage()">发送</button>
 
-  <script src="main.js"></script>
+  <script>
+    // JavaScript 代码
+    var chatLog = []; // 存放聊天记录的数组
+
+    // 加载聊天记录的函数
+    function loadChatLog() {
+      fetch('/chatlog')
+        .then(response => response.json())
+        .then(data => {
+          chatLog = data;
+          renderChatLog();
+        })
+        .catch(error => console.error(error));
+    }
+
+    // 写入聊天记录的函数
+    function saveChatLog(message, timestamp) {
+      fetch('/chatlog', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message, timestamp })
+      })
+        .then(() => console.log('聊天记录已保存'))
+        .catch(error => console.error(error));
+    }
+
+    // 发送消息的函数
+    function sendMessage() {
+      var messageInput = document.getElementById('message-input');
+      var message = messageInput.value;
+
+      var currentDate = new Date();
+      var timestamp = currentDate.toLocaleString();
+
+      chatLog.push({ message, timestamp });
+      saveChatLog(message, timestamp);
+      renderChatLog();
+
+      messageInput.value = '';
+    }
+
+    // 将聊天记录渲染到界面上的函数
+    function renderChatLog() {
+      var chatLogDiv = document.getElementById('chat-log');
+      chatLogDiv.innerHTML = '';
+
+      for (var i = 0; i < chatLog.length; i++) {
+        var message = chatLog[i].message;
+        var timestamp = chatLog[i].timestamp;
+
+        chatLogDiv.innerHTML += '<p>' + timestamp + ': ' + message + '</p>';
+      }
+    }
+
+    // 页面加载后加载聊天记录
+    window.onload = function() {
+      loadChatLog();
+    };
+  </script>
 </body>
 </html>
