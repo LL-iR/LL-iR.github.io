@@ -75,7 +75,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 25px;
             width: 90%;
-            max-width: 50%;
+            max-width: 500px; /* 修改为固定像素值 */
             text-align: center;
         }
 
@@ -237,7 +237,7 @@
             animation: bloodFall 2s linear infinite;
         }
 
-        /* 末日模式背景 */
+       
         .apocalypse-mode {
             background-color: #8B0000;
             position: relative;
@@ -303,7 +303,6 @@
             })('bugger')('de', 0, 0, (0, 0));
         }, 1000);
 
-
         const answerst = "你<br/>喜欢你<br/>是你<br/>you<br/>我爱你<br/>我喜欢你<br/>你啊<br/>只喜欢你<br/>洛黎<br/>小黎<br/>洛";
         const questionst = "最喜欢的歌是什么?<br/>最喜欢什么颜色?<br/>最喜欢的食物是什么?<br/>最喜欢的季节是什么?<br/>最喜欢什么动物?<br/>最喜欢的人是谁?";
         const textst = "为什么不填我<br/>说好的地久天长呢<br/>凝视着我，目光别移开<br/>我一直注视着你<br/>拒绝是新型的告白对吧<br/>我能感觉到你心里有我，对不对<br/>我知道你喜欢我的 对吧<br/>我的视线从未从你身上离开<br/>抗拒也许是另一种靠近，对不对对不对";
@@ -319,7 +318,6 @@
         const youscreen = document.querySelector('.youscreen');
 
         
-
         function checkFinalAnswer() {
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const validAnswers = answerst.split('<br/>').map(a => a.trim().toLowerCase());
@@ -468,13 +466,25 @@
 
         updateQuestion();
 
-        // 移动端触摸优化
-        document.getElementById('nextBtn').addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('pressed');
-            setTimeout(() => this.classList.remove('pressed'), 100);
-            this.click(); // 手动触发 click 事件
-        });
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (isTouchDevice) {
+            // 移动端触摸优化
+            document.getElementById('nextBtn').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.classList.add('pressed');
+                setTimeout(() => this.classList.remove('pressed'), 100);
+                this.click(); // 手动触发 click 事件
+            });
+        } else {
+            // 电脑端事件处理
+            document.getElementById('nextBtn').addEventListener('mousedown', function() {
+                this.classList.add('pressed');
+            });
+            document.getElementById('nextBtn').addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+            });
+        }
 
         // 优化音频播放逻辑
         document.addEventListener('touchstart', function() {
