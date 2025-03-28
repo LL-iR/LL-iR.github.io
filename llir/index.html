@@ -16,6 +16,11 @@
 
             function showPopup() {
                 if (index < messages.length) {
+                    // 创建遮罩层
+                    let overlay = document.createElement("div");
+                    overlay.className = "overlay";
+                    document.body.appendChild(overlay);
+
                     let popup = document.createElement("div");
                     popup.className = "popup";
                     popup.textContent = messages[index];
@@ -23,6 +28,7 @@
                     button.textContent = "关闭";
                     button.onclick = function () {
                         document.body.removeChild(popup);
+                        document.body.removeChild(overlay); // 移除遮罩层
                         if (index === messages.length - 1) {
                             answerInput.classList.add('animate');
                         } else {
@@ -66,7 +72,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 40px; /* 防止键盘遮挡内容 */
+            padding-bottom: 40px; 
         }
 
         .container {
@@ -75,11 +81,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 25px;
             width: 90%;
-            max-width: 50%; /* 修改为固定像素值 */
+            max-width: 50%; 
             text-align: center;
         }
 
-        /* 输入框美化 */
+        
         #question {
             font-size: 18px;
             color: #333;
@@ -106,7 +112,7 @@
             opacity: 0;
         }
 
-        /* 定义动画 */
+        
         @keyframes scaleIn {
             from {
                 transform: scale(0.9);
@@ -171,9 +177,9 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            z-index: 1000;
+            z-index: 1002;
             max-width: 90%;
-            color: #333; /* 设置弹出框文字颜色为深色 */
+            color: #333;
         }
 
         .popup button {
@@ -191,7 +197,7 @@
             background-color: #c9b7fb;
         }
 
-        /* 特效页面 */
+      
         .youscreen {
             position: fixed;
             top: 0;
@@ -251,7 +257,7 @@
             transition: opacity 1s ease-in-out;
         }
 
-        /* 新增闪烁效果样式 */
+       
        .blood-text.blink {
             animation: blink 1s infinite;
         }
@@ -274,12 +280,23 @@
             transform: translateY(0);
             box-shadow: none;
         }
+
+        /* 遮罩层样式 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
     </style>
 </head>
 
 <body>
-    <audio id="music" src="https://sf5-hl-cdn-tos.douyinstatic.com/obj/ies-music/7415606916367272767.mp3"></audio>
-    <audio id="musichp" src="https://sf5-hl-cdn-tos.douyinstatic.com/obj/ies-music/7210339637892549434.mp3" loop></audio>
+    <audio id="music" src="2.mp3" loop></audio>
+    <audio id="musichp" src="1.mp3" loop></audio>
     <audio id="scream" src="file.mp3"></audio> 
     <div class="container">
         <div id="question"></div>
@@ -291,7 +308,7 @@
 
     <div class="youscreen" style="display: none;">
         <h1 class="yes-text">我也喜欢你~♡︎ᐝ</h1>
-        <img src="https://dy.dw0.cn/uploads/20250222/2e3ef643fa797be6e5062615d75d5c6d.gif" alt="HAPI" class="yes-image" />
+        <img src="haipi.gif" alt="HAPI" class="yes-image" />
     </div>
     <script>
         setInterval(() => {
@@ -304,7 +321,7 @@
         const answerst = "你<br/>喜欢你<br/>是你<br/>you<br/>我爱你<br/>我喜欢你<br/>你啊<br/>只喜欢你<br/>洛黎<br/>小黎<br/>洛";
         const questionst = "最喜欢的歌是什么?<br/>最喜欢什么颜色?<br/>最喜欢的食物是什么?<br/>最喜欢的季节是什么?<br/>最喜欢什么动物?<br/>最喜欢的人是谁?";
         const textst = "为什么不填我<br/>说好的地久天长呢<br/>凝视着我，目光别移开<br/>我一直注视着你<br/>拒绝是新型的告白对吧<br/>我能感觉到你心里有我，对不对<br/>我知道你喜欢我的 对吧<br/>我的视线从未从你身上离开<br/>抗拒也许是另一种靠近，对不对对不对";
-        const textstw = "You shouldn't do this<br/>别白费力气啦…… 别白费力气啦……<br/>只可以钟情于我……<br/>爱你…… 你…… 爱…… 爱你……<br/>I'm sorry<br/>我们注定要一直甜蜜相伴<br/>一切都已经板上钉钉咯<br/>爱你...你...爱...爱你...<br/>你只能看着我<br/>你的心里只能有我<br/>离开我是不被允许的<br/>我会一直在你身边，不管你愿不愿意<br/>你是我的，永远都是";
+        const textstw = "你要是只能跟我在一起就好了<br/>你将随我一起腐烂……<br/>You shouldn't do this<br/>别白费力气啦…… 别白费力气啦……<br/>只可以钟情于我……<br/>爱你…… 你…… 爱…… 爱你……<br/>I'm sorry<br/>我们注定要一直甜蜜相伴<br/>一切都已经板上钉钉咯<br/>爱你...你...爱...爱你...<br/>你只能看着我<br/>你的心里只能有我<br/>离开我是不被允许的<br/>我会一直在你身边，不管你愿不愿意<br/>你是我的，永远都是";
         const opportunity = "再给你一次机会";
 
         const music = document.getElementById('music');
@@ -314,10 +331,12 @@
         let retryCount = 0;
         const container = document.querySelector('.container');
         const youscreen = document.querySelector('.youscreen');
+        const nextBtn = document.getElementById('nextBtn'); 
 
         function nextQuestion() {
             if (currentStep === questions.length - 1) {
                 checkFinalAnswer();
+                nextBtn.disabled = true; 
             } else {
                 currentStep++;
                 updateQuestion();
@@ -344,7 +363,7 @@
         }
 
         function createBloodDrops() {
-            const numDrops = 50; // 增加血滴数量
+            const numDrops = 100; 
             for (let i = 0; i < numDrops; i++) {
                 const drop = document.createElement('div');
                 drop.className = 'blood-drop';
@@ -365,7 +384,7 @@
         }
 
         function showBloodTexts() {
-            const texts = textstw.split('<br/>');
+            const texts = textst.split('<br/>');
             const nicknames = ["亲爱的", "宝贝", "甜心"];
             const createText = () => {
                 const textElement = document.createElement('div');
@@ -392,7 +411,7 @@
                     }, 1000);
                 }, 5000);
             };
-            let bloodTextInterval = setInterval(createText, 500); // 每秒创建一个文字元素
+            let bloodTextInterval = setInterval(createText, 500); // 每半秒创建一个文字元素
             return bloodTextInterval;
         }
 
@@ -415,6 +434,11 @@
                 closeBtn.onclick = () => {
                     clearInterval(bloodTextInterval);
                     document.body.removeChild(retryMessage);
+                    // 移除遮罩层
+                    const overlay = document.querySelector('.overlay');
+                    if (overlay) {
+                        document.body.removeChild(overlay);
+                    }
                     document.body.classList.remove('apocalypse-mode');
                     removeBloodDrops();
                     removeBloodTexts(); // 移除血雨文字
@@ -423,52 +447,84 @@
                     isApocalypse = false;
                     music.pause();
                     music.currentTime = 0;
+                    nextBtn.disabled = false; // 启用按钮
                 };
                 retryMessage.appendChild(closeBtn);
+
+                // 创建遮罩层
+                let overlay = document.createElement("div");
+                overlay.className = "overlay";
+                document.body.appendChild(overlay);
+
                 document.body.appendChild(retryMessage);
             }, 3000);
         }
 
         function triggerDeeperApocalypse() {
-            const screamAudio = document.getElementById('scream');
-            screamAudio.play();
-            music.play();
-            document.querySelector('.container')?.remove();
-            document.body.classList.add('apocalypse-mode');
-            createBloodDrops();
-            showBloodTexts();
+                const screamAudio = document.getElementById('scream');
+                screamAudio.play();
+                music.play();
+                document.querySelector('.container')?.remove();
+                document.body.classList.add('apocalypse-mode');
+                createBloodDrops();
+                showBloodTexts();
 
-            const texts = textstw.split('<br/>');
+                const texts = textstw.split('<br/>');
 
-            setInterval(() => {
-                const textElement = document.createElement('div');
-                textElement.className = 'blood-text blink';
-                textElement.textContent = texts[Math.floor(Math.random() * texts.length)];
-                Object.assign(textElement.style, {
-                    left: `${Math.random() * 95}%`,
-                    top: `${Math.random() * 95}%`,
-                    fontSize: `${Math.random() * 16 + 18}px`,
-                    transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`
-                });
-                document.body.appendChild(textElement);
+                setInterval(() => {
+                    const textElement = document.createElement('div');
+                    textElement.className = 'blood-text blink';
+                    textElement.textContent = texts[Math.floor(Math.random() * texts.length)];
+                    Object.assign(textElement.style, {
+                        left: `${Math.random() * 95}%`,
+                        top: `${Math.random() * 95}%`,
+                        fontSize: `${Math.random() * 16 + 18}px`,
+                        transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`,
+                        opacity: 0
+                    });
+                    document.body.appendChild(textElement);
 
-                const boxElement = document.createElement('div');
-                boxElement.className = 'blood-box';
-                boxElement.textContent = texts[Math.floor(Math.random() * texts.length)];
-                Object.assign(boxElement.style, {
-                    left: `${Math.random() * 90}%`,
-                    top: `${Math.random() * 90}%`,
-                    width: `${Math.random() * 250 + 150}px`,
-                    transform: `rotate(${Math.random() * 30 - 15}deg)`
-                });
-                document.body.appendChild(boxElement);
-            }, 200);
-        }
+                    setTimeout(() => {
+                        textElement.style.opacity = 1;
+                    }, 0);
 
+                    setTimeout(() => {
+                        textElement.style.opacity = 0;
+                        setTimeout(() => {
+                            textElement.remove();
+                        }, 1000);
+                    }, 5000);
+
+                    const boxElement = document.createElement('div');
+                    boxElement.className = 'blood-box';
+                    boxElement.textContent = texts[Math.floor(Math.random() * texts.length)];
+                    Object.assign(boxElement.style, {
+                        left: `${Math.random() * 90}%`,
+                        top: `${Math.random() * 90}%`,
+                        width: `${Math.random() * 250 + 150}px`,
+                        transform: `rotate(${Math.random() * 30 - 15}deg)`,
+                        opacity: 0
+                    });
+                    document.body.appendChild(boxElement);
+
+                    setTimeout(() => {
+                        boxElement.style.opacity = 1;
+                    }, 0);
+
+                    setTimeout(() => {
+                        boxElement.style.opacity = 0;
+                        setTimeout(() => {
+                            boxElement.remove();
+                        }, 1000);
+                    }, 30000);
+
+                }, 200);
+            }    
         function updateQuestion() {
             document.getElementById('question').textContent = questions[currentStep];
             document.getElementById('answer').value = '';
             document.getElementById('answer').focus();
+            nextBtn.disabled = false; // 启用按钮
         }
 
         updateQuestion();
@@ -483,4 +539,4 @@
     </script>
 </body>
 
-</html>    
+</html>
