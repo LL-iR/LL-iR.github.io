@@ -323,6 +323,7 @@
         const textst = "为什么不填我<br/>说好的地久天长呢<br/>凝视着我，目光别移开<br/>我一直注视着你<br/>拒绝是新型的告白对吧<br/>我能感觉到你心里有我，对不对<br/>我知道你喜欢我的 对吧<br/>我的视线从未从你身上离开<br/>抗拒也许是另一种靠近，对不对对不对";
         const textstw = "你要是只能跟我在一起就好了<br/>你将随我一起腐烂……<br/>You shouldn't do this<br/>别白费力气啦…… 别白费力气啦……<br/>只可以钟情于我……<br/>爱你…… 你…… 爱…… 爱你……<br/>I'm sorry<br/>我们注定要一直甜蜜相伴<br/>一切都已经板上钉钉咯<br/>爱你...你...爱...爱你...<br/>你只能看着我<br/>你的心里只能有我<br/>离开我是不被允许的<br/>我会一直在你身边，不管你愿不愿意<br/>你是我的，永远都是";
         const opportunity = "再给你一次机会";
+        const textawa = "你以为这样就结束了？<br/>你跑不掉的<br/>你永远属于我<br/>别白费力气啦.....<br/>你心里一直有我，对不对<br/>爱你...爱...爱你...<br/>You shouldn't do this<br/>我爱你这种轻浮到极点的话语，真的是让人忍不住想吐呢。<br/>如果你的眼睛没有一直注视着我的话，那就挖出来好了<br/>爱只有在染满鲜血时才是最美丽的呀！";
 
         const music = document.getElementById('music');
         const questions = questionst.split('<br/>');
@@ -359,6 +360,9 @@
                 youscreen.style.display = 'flex';
                 music.pause();
                 document.getElementById('musichp').play();
+                setTimeout(() => {
+                    removeTextAndImage();
+                }, 3000);
             }
         }
 
@@ -398,7 +402,8 @@
                     left: `${Math.random() * 95}%`,
                     top: `${Math.random() * 95}%`,
                     fontSize: `${Math.random() * 16 + 18}px`,
-                    transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`
+                    transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`,
+                    textShadow: '1px 1px 0 rgba(0, 0, 0, 0.3), -1px -1px 0 rgba(0, 0, 0, 0.3), 1px -1px 0 rgba(0, 0, 0, 0.3), -1px 1px 0 rgba(0, 0, 0, 0.3)' 
                 });
                 document.body.appendChild(textElement);
                 setTimeout(() => {
@@ -460,66 +465,69 @@
             }, 3000);
         }
 
-        function triggerDeeperApocalypse() {
-                const screamAudio = document.getElementById('scream');
-                screamAudio.play();
-                music.play();
-                document.querySelector('.container')?.remove();
-                document.body.classList.add('apocalypse-mode');
-                createBloodDrops();
-                showBloodTexts();
+        function triggerDeeperApocalypse(shouldShowBloodTexts = true) {
+                    const screamAudio = document.getElementById('scream');
+                    screamAudio.play();
+                    music.play();
+                    document.querySelector('.container')?.remove();
+                    document.body.classList.add('apocalypse-mode');
+                    createBloodDrops();
 
-                const texts = textstw.split('<br/>');
+                    if (shouldShowBloodTexts) {
+                        showBloodTexts();
+                    }
 
-                setInterval(() => {
-                    const textElement = document.createElement('div');
-                    textElement.className = 'blood-text blink';
-                    textElement.textContent = texts[Math.floor(Math.random() * texts.length)];
-                    Object.assign(textElement.style, {
-                        left: `${Math.random() * 95}%`,
-                        top: `${Math.random() * 95}%`,
-                        fontSize: `${Math.random() * 16 + 18}px`,
-                        transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`,
-                        opacity: 0
-                    });
-                    document.body.appendChild(textElement);
+                    const texts = textstw.split('<br/>');
 
-                    setTimeout(() => {
-                        textElement.style.opacity = 1;
-                    }, 0);
+                    setInterval(() => {
+                        const textElement = document.createElement('div');
+                        textElement.className = 'blood-text blink';
+                        textElement.textContent = texts[Math.floor(Math.random() * texts.length)];
+                        Object.assign(textElement.style, {
+                            left: `${Math.random() * 95}%`,
+                            top: `${Math.random() * 95}%`,
+                            fontSize: `${Math.random() * 16 + 18}px`,
+                            transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`,
+                            opacity: 0
+                        });
+                        document.body.appendChild(textElement);
 
-                    setTimeout(() => {
-                        textElement.style.opacity = 0;
                         setTimeout(() => {
-                            textElement.remove();
-                        }, 1000);
-                    }, 5000);
+                            textElement.style.opacity = 1;
+                        }, 0);
 
-                    const boxElement = document.createElement('div');
-                    boxElement.className = 'blood-box';
-                    boxElement.textContent = texts[Math.floor(Math.random() * texts.length)];
-                    Object.assign(boxElement.style, {
-                        left: `${Math.random() * 90}%`,
-                        top: `${Math.random() * 90}%`,
-                        width: `${Math.random() * 250 + 150}px`,
-                        transform: `rotate(${Math.random() * 30 - 15}deg)`,
-                        opacity: 0
-                    });
-                    document.body.appendChild(boxElement);
-
-                    setTimeout(() => {
-                        boxElement.style.opacity = 1;
-                    }, 0);
-
-                    setTimeout(() => {
-                        boxElement.style.opacity = 0;
                         setTimeout(() => {
-                            boxElement.remove();
-                        }, 1000);
-                    }, 30000);
+                            textElement.style.opacity = 0;
+                            setTimeout(() => {
+                                textElement.remove();
+                            }, 1000);
+                        }, 5000);
 
-                }, 200);
-            }    
+                        const boxElement = document.createElement('div');
+                        boxElement.className = 'blood-box';
+                        boxElement.textContent = texts[Math.floor(Math.random() * texts.length)];
+                        Object.assign(boxElement.style, {
+                            left: `${Math.random() * 90}%`,
+                            top: `${Math.random() * 90}%`,
+                            width: `${Math.random() * 250 + 150}px`,
+                            transform: `rotate(${Math.random() * 30 - 15}deg)`,
+                            opacity: 0
+                        });
+                        document.body.appendChild(boxElement);
+
+                        setTimeout(() => {
+                            boxElement.style.opacity = 1;
+                        }, 0);
+
+                        setTimeout(() => {
+                            boxElement.style.opacity = 0;
+                            setTimeout(() => {
+                                boxElement.remove();
+                            }, 1000);
+                        }, 30000);
+
+                    }, 200);
+                }
         function updateQuestion() {
             document.getElementById('question').textContent = questions[currentStep];
             document.getElementById('answer').value = '';
@@ -536,7 +544,65 @@
             document.getElementById('music').play();
             document.removeEventListener('touchstart', arguments.callee);
         });
+
+        function removeTextAndImage() {
+            const yesText = document.querySelector('.yes-text');
+            const yesImage = document.querySelector('.yes-image');
+            const musichp = document.getElementById('musichp');
+            const text = yesText.textContent;
+            let index = text.length;
+
+            const typingInterval = setInterval(() => {
+                if (index > 0) {
+                    index--;
+                    yesText.textContent = text.slice(0, index);
+                } else {
+                    clearInterval(typingInterval);
+                    yesImage.remove();
+                    musichp.pause();
+                    ApocalypseMode();
+                    triggerDeeperApocalypse(false);
+                   
+                }
+            }, 200);
+        }
+
+        function ApocalypseMode() {
+            music.play();
+            document.body.classList.add('apocalypse-mode');
+            createBloodDrops();
+            const texts = textawa.split('<br/>');
+            const nicknames = ["亲爱的", "宝贝", "甜心"];
+            const createText = () => {
+                const textElement = document.createElement('div');
+                let text = texts[Math.floor(Math.random() * texts.length)];
+                if (Math.random() < 0.3) {
+                    text = nicknames[Math.floor(Math.random() * nicknames.length)] + " " + text;
+                }
+                textElement.className = 'blood-text blink';
+                textElement.textContent = text;
+                Object.assign(textElement.style, {
+                    left: `${Math.random() * 95}%`,
+                    top: `${Math.random() * 95}%`,
+                    fontSize: `${Math.random() * 16 + 18}px`,
+                    transform: `skew(${Math.random() * 10 - 5}deg, ${Math.random() * 10 - 5}deg)`,
+                    textShadow: '1px 1px 0 rgba(0, 0, 0, 0.3), -1px -1px 0 rgba(0, 0, 0, 0.3), 1px -1px 0 rgba(0, 0, 0, 0.3), -1px 1px 0 rgba(0, 0, 0, 0.3)' 
+                });
+                document.body.appendChild(textElement);
+                setTimeout(() => {
+                    textElement.style.opacity = 1;
+                }, 0);
+                setTimeout(() => {
+                    textElement.style.opacity = 0;
+                    setTimeout(() => {
+                        textElement.remove();
+                    }, 1000);
+                }, 5000);
+            };
+            let bloodTextInterval = setInterval(createText, 200); // 每半秒创建一个文字元素
+            return bloodTextInterval;
+        }
     </script>
 </body>
 
-</html>
+</html>    
