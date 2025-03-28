@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>问卷调查</title>
     <link rel="stylesheet" href="li.css" type="text/css" media="all" />
-    
+
     <script>
         const messagest = "一定要说真话哦<br/>......<br/>最喜欢你了^_^";
         document.addEventListener("DOMContentLoaded", function () {
@@ -75,7 +75,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 25px;
             width: 90%;
-            max-width: 500px; /* 修改为固定像素值 */
+            max-width: 50%; /* 修改为固定像素值 */
             text-align: center;
         }
 
@@ -146,7 +146,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            z-index: 10; /* 添加 z-index 属性 */
         }
 
         #nextBtn:hover {
@@ -237,7 +236,7 @@
             animation: bloodFall 2s linear infinite;
         }
 
-       
+
         .apocalypse-mode {
             background-color: #8B0000;
             position: relative;
@@ -302,7 +301,6 @@
                 })(a);
             })('bugger')('de', 0, 0, (0, 0));
         }, 1000);
-
         const answerst = "你<br/>喜欢你<br/>是你<br/>you<br/>我爱你<br/>我喜欢你<br/>你啊<br/>只喜欢你<br/>洛黎<br/>小黎<br/>洛";
         const questionst = "最喜欢的歌是什么?<br/>最喜欢什么颜色?<br/>最喜欢的食物是什么?<br/>最喜欢的季节是什么?<br/>最喜欢什么动物?<br/>最喜欢的人是谁?";
         const textst = "为什么不填我<br/>说好的地久天长呢<br/>凝视着我，目光别移开<br/>我一直注视着你<br/>拒绝是新型的告白对吧<br/>我能感觉到你心里有我，对不对<br/>我知道你喜欢我的 对吧<br/>我的视线从未从你身上离开<br/>抗拒也许是另一种靠近，对不对对不对";
@@ -317,7 +315,15 @@
         const container = document.querySelector('.container');
         const youscreen = document.querySelector('.youscreen');
 
-        
+        function nextQuestion() {
+            if (currentStep === questions.length - 1) {
+                checkFinalAnswer();
+            } else {
+                currentStep++;
+                updateQuestion();
+            }
+        }
+
         function checkFinalAnswer() {
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const validAnswers = answerst.split('<br/>').map(a => a.trim().toLowerCase());
@@ -386,7 +392,8 @@
                     }, 1000);
                 }, 5000);
             };
-            bloodTextInterval = setInterval(createText, 500); // 每秒创建一个文字元素
+            let bloodTextInterval = setInterval(createText, 500); // 每秒创建一个文字元素
+            return bloodTextInterval;
         }
 
         function triggerBloodEffect() {
@@ -396,7 +403,7 @@
             isApocalypse = true;
             document.body.classList.add('apocalypse-mode', 'apocalypse-shake');
             createBloodDrops();
-            showBloodTexts();
+            let bloodTextInterval = showBloodTexts();
 
             setTimeout(() => {
                 document.body.classList.remove('apocalypse-shake');
@@ -468,24 +475,6 @@
 
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-        if (isTouchDevice) {
-            // 移动端触摸优化
-            document.getElementById('nextBtn').addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                this.classList.add('pressed');
-                setTimeout(() => this.classList.remove('pressed'), 100);
-                this.click(); // 手动触发 click 事件
-            });
-        } else {
-            // 电脑端事件处理
-            document.getElementById('nextBtn').addEventListener('mousedown', function() {
-                this.classList.add('pressed');
-            });
-            document.getElementById('nextBtn').addEventListener('mouseup', function() {
-                this.classList.remove('pressed');
-            });
-        }
-
         // 优化音频播放逻辑
         document.addEventListener('touchstart', function() {
             document.getElementById('music').play();
@@ -494,5 +483,4 @@
     </script>
 </body>
 
-</html>
-    
+</html>    
